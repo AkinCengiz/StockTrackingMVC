@@ -1,0 +1,30 @@
+﻿@using StockTrackingMVC.Models.Entity
+@model List<Categories>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-info">Kategoriler Paneli</h2><br/>
+<table class="table table-bordered">
+    <thead>
+    <th>Kategori ID</th>
+    <th>Kategori Adı</th>
+    <th>İşlemler</th>
+    </thead>
+    <tbody>
+    @foreach (var ctg in Model)
+    {
+        <tr>
+            <td>@ctg.CategoryID</td>
+            <td>@ctg.CategoryName</td>
+            <td>
+                <a href="/Category/DeleteCategory/@ctg.CategoryID" class="btn btn-danger">Sil</a>
+                <a href="/Category/UpdateCategory/@ctg.CategoryID" class="btn btn-success">Güncelle</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a href="/Category/AddCategory" class="btn btn-info">Kategori Ekle</a>
+

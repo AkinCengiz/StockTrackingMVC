@@ -1,0 +1,15 @@
+﻿@model StockTrackingMVC.Models.Entity.Categories
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-info">Kategori Ekleme Paneli</h2><br/>
+<form method="post">
+    <div class="">
+        @Html.LabelFor(c => c.CategoryName)
+        @Html.TextBoxFor(c => c.CategoryName, new { @class="form-control"})
+    </div><br/>
+    <button class="btn btn-primary">Ekle</button>
+</form>
+
