@@ -1,0 +1,38 @@
+﻿@using StockTrackingMVC.Models.Entity
+@model List<Customers>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-info">Müşteriler Paneli</h2>
+<br />
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Müşteri ID</th>
+        <th>Müşteri Adı</th>
+        <th>Müşteri Soyadı</th>
+        <th>Şehir</th>
+        <th>Bakiye</th>
+        <th>İşlemler</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.CustomerID</td>
+            <td>@customer.FirstName</td>
+            <td>@customer.LastName</td>
+            <td>@customer.City</td>
+            <td>@customer.Balance</td>
+            <td>
+                <a href="/Customer/DeleteCustomer/@customer.CustomerID" class="btn btn-danger">Sil</a>
+                <a href="/Customer/UpdateCustomer/@customer.CustomerID" class="btn btn-success">Güncelle</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a href="/Customer/AddCustomer" class="btn btn-primary">Müşteri Ekle</a>

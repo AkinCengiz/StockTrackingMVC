@@ -1,0 +1,28 @@
+﻿@model StockTrackingMVC.Models.Entity.Customers
+@{
+    ViewBag.Title = "UpdateCustomer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<<h2 class="text-info">Müşteri Güncelleme Paneli</h2>
+<br />
+<form method="post">
+    @Html.HiddenFor(c => c.CustomerID)
+    <div class="">
+        @Html.LabelFor(c => c.FirstName)
+        @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(c => c.LastName)
+        @Html.TextBoxFor(c => c.LastName, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(c => c.City)
+        @Html.TextBoxFor(c => c.City, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(c => c.Balance)
+        @Html.TextBoxFor(c => c.Balance, new { @class = "form-control" })
+    </div><br/>
+    <button class="btn btn-primary">Güncelle</button>
+</form>

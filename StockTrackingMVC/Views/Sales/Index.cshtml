@@ -1,0 +1,43 @@
+﻿@using StockTrackingMVC.Models.Entity
+@model List<Sales>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-info">Satışlar Paneli</h2>
+<br />
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Satış ID</th>
+        <th>Ürün</th>
+        <th>Personel</th>
+        <th>Müşteri</th>
+        <th>Birim Fiyat</th>
+        <th>Miktar</th>
+        <th>Tutar</th>
+        <th>Tarih</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var sal in Model)
+    {
+        <tr>
+            <td>@sal.SaleID</td>
+            <td>@sal.Products.ProductName</td>
+            <td>@sal.Employees.FirstName @sal.Employees.LastName</td>
+            <td>@sal.Customers.FirstName @sal.Customers.LastName</td>
+            <td>@sal.Products.SalesPrice</td>
+            <td>@sal.Amount</td>
+            <td>@sal.Total</td>
+            <td>@sal.DateInfo</td>
+            <td>
+                <a href="/Sales/DeleteSales/@sal.SaleID" class="btn btn-danger">Sil</a>
+                <a href="/Sales/UpdateSales/@sal.SaleID" class="btn btn-success">Güncelle</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a href="/Sales/AddSales" class="btn btn-primary">Ekle</a>
