@@ -1,5 +1,7 @@
 ﻿@using StockTrackingMVC.Models.Entity
-@model List<Customers>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Customers>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,30 +11,31 @@
 <br />
 <table class="table table-bordered">
     <thead>
-    <tr>
-        <th>Müşteri ID</th>
-        <th>Müşteri Adı</th>
-        <th>Müşteri Soyadı</th>
-        <th>Şehir</th>
-        <th>Bakiye</th>
-        <th>İşlemler</th>
-    </tr>
+        <tr>
+            <th>Müşteri ID</th>
+            <th>Müşteri Adı</th>
+            <th>Müşteri Soyadı</th>
+            <th>Şehir</th>
+            <th>Bakiye</th>
+            <th>İşlemler</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var customer in Model)
-    {
-        <tr>
-            <td>@customer.CustomerID</td>
-            <td>@customer.FirstName</td>
-            <td>@customer.LastName</td>
-            <td>@customer.City</td>
-            <td>@customer.Balance</td>
-            <td>
-                <a href="/Customer/DeleteCustomer/@customer.CustomerID" class="btn btn-danger">Sil</a>
-                <a href="/Customer/UpdateCustomer/@customer.CustomerID" class="btn btn-success">Güncelle</a>
-            </td>
-        </tr>
-    }
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CustomerID</td>
+                <td>@customer.FirstName</td>
+                <td>@customer.LastName</td>
+                <td>@customer.City</td>
+                <td>@customer.Balance</td>
+                <td>
+                    <a href="/Customer/DeleteCustomer/@customer.CustomerID" class="btn btn-danger">Sil</a>
+                    <a href="/Customer/UpdateCustomer/@customer.CustomerID" class="btn btn-success">Güncelle</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
 <a href="/Customer/AddCustomer" class="btn btn-primary">Müşteri Ekle</a>

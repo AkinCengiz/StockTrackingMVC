@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StockTrackingMVC.Models.Entity;
+using PagedList;
+using PagedList.Mvc;
 
 namespace StockTrackingMVC.Controllers
 {
@@ -11,9 +13,11 @@ namespace StockTrackingMVC.Controllers
     {
         // GET: Customer
         private DbMVCStockTakipEntities db = new DbMVCStockTakipEntities();
-        public ActionResult Index()
+        [Authorize]
+        public ActionResult Index(int sayfa = 1)
         {
-            var customers = db.Customers.ToList();
+            //var customers = db.Customers.Where(c => c.IsActive == true).ToList();
+            var customers = db.Customers.ToList().ToPagedList(sayfa, 10);
             return View(customers);
         }
 
@@ -26,6 +30,7 @@ namespace StockTrackingMVC.Controllers
         [HttpPost]
         public ActionResult AddCustomer(Customers customer)
         {
+            customer.IsActive = true;
             db.Customers.Add(customer);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -52,7 +57,7 @@ namespace StockTrackingMVC.Controllers
         public ActionResult DeleteCustomer(int id)
         {
             var customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
+            customer.IsActive = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,0 +1,36 @@
+﻿@model StockTrackingMVC.Models.Entity.Products
+@{
+    ViewBag.Title = "UpdateProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-info">Ürün Güncelle Paneli</h2>
+<br />
+<form method="post">
+    @Html.HiddenFor(p => p.ProductID)
+    <div class="">
+        @Html.LabelFor(p => p.ProductName)
+        @Html.TextBoxFor(p => p.ProductName, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(p => p.Brand)
+        @Html.TextBoxFor(p => p.Brand, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(p => p.StockAmount)
+        @Html.TextBoxFor(p => p.StockAmount, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(p => p.PurchasePrice)
+        @Html.TextBoxFor(p => p.PurchasePrice, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(p => p.SalesPrice)
+        @Html.TextBoxFor(p => p.SalesPrice, new { @class = "form-control" })
+    </div><br/>
+    <div class="">
+        @Html.LabelFor(p => p.Category)
+        @Html.DropDownListFor(p => p.Categories.CategoryID, (List<SelectListItem>)ViewBag.listCtg, new { @class = "form-control" })
+    </div><br/>
+    <button class="btn btn-info">Güncelle</button>
+</form>

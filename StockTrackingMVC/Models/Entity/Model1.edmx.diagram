@@ -14,6 +14,7 @@
         <AssociationConnector Association="DbMVCStockTakipModel.FK_Sales_Customers" ManuallyRouted="false" />
         <AssociationConnector Association="DbMVCStockTakipModel.FK_Sales_Employees" ManuallyRouted="false" />
         <AssociationConnector Association="DbMVCStockTakipModel.FK_Sales_Products" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DbMVCStockTakipModel.Users" Width="1.5" PointX="7.5" PointY="4.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,5 +1,7 @@
-﻿@using StockTrackingMVC.Models.Entity
-@model List<Sales>
+﻿@using PagedList
+@using PagedList.Mvc
+@using StockTrackingMVC.Models.Entity
+@model PagedList.IPagedList<Sales>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,35 +11,36 @@
 <br />
 <table class="table table-bordered">
     <thead>
-    <tr>
-        <th>Satış ID</th>
-        <th>Ürün</th>
-        <th>Personel</th>
-        <th>Müşteri</th>
-        <th>Birim Fiyat</th>
-        <th>Miktar</th>
-        <th>Tutar</th>
-        <th>Tarih</th>
-    </tr>
+        <tr>
+            <th>Satış ID</th>
+            <th>Ürün</th>
+            <th>Personel</th>
+            <th>Müşteri</th>
+            <th>Birim Fiyat</th>
+            <th>Miktar</th>
+            <th>Tutar</th>
+            <th>Tarih</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var sal in Model)
-    {
-        <tr>
-            <td>@sal.SaleID</td>
-            <td>@sal.Products.ProductName</td>
-            <td>@sal.Employees.FirstName @sal.Employees.LastName</td>
-            <td>@sal.Customers.FirstName @sal.Customers.LastName</td>
-            <td>@sal.Products.SalesPrice</td>
-            <td>@sal.Amount</td>
-            <td>@sal.Total</td>
-            <td>@sal.DateInfo</td>
-            <td>
-                <a href="/Sales/DeleteSales/@sal.SaleID" class="btn btn-danger">Sil</a>
-                <a href="/Sales/UpdateSales/@sal.SaleID" class="btn btn-success">Güncelle</a>
-            </td>
-        </tr>
-    }
+        @foreach (var sal in Model)
+        {
+            <tr>
+                <td>@sal.SaleID</td>
+                <td>@sal.Products.ProductName</td>
+                <td>@sal.Employees.FirstName @sal.Employees.LastName</td>
+                <td>@sal.Customers.FirstName @sal.Customers.LastName</td>
+                <td>@sal.Products.SalesPrice</td>
+                <td>@sal.Amount</td>
+                <td>@sal.Total</td>
+                <td>@sal.DateInfo</td>
+                <td>
+                    <a href="/Sales/DeleteSales/@sal.SaleID" class="btn btn-danger">Sil</a>
+                    <a href="/Sales/UpdateSales/@sal.SaleID" class="btn btn-success">Güncelle</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
 <a href="/Sales/AddSales" class="btn btn-primary">Ekle</a>

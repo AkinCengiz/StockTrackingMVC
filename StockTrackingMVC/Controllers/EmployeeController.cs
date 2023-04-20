@@ -13,7 +13,7 @@ namespace StockTrackingMVC.Controllers
         private DbMVCStockTakipEntities db = new DbMVCStockTakipEntities();
         public ActionResult Index()
         {
-            var employees = db.Employees.ToList();
+            var employees = db.Employees.Where(e => e.IsActive == true).ToList();
             return View(employees);
         }
 
@@ -26,6 +26,7 @@ namespace StockTrackingMVC.Controllers
         [HttpPost]
         public ActionResult AddEmployee(Employees employee)
         {
+            employee.IsActive = true;
             db.Employees.Add(employee);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -34,7 +35,7 @@ namespace StockTrackingMVC.Controllers
         public ActionResult DeleteEmployee(int id)
         {
             var employee = db.Employees.Find(id);
-            db.Employees.Remove(employee);
+            employee.IsActive = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

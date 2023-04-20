@@ -13,7 +13,7 @@ namespace StockTrackingMVC.Controllers
         private DbMVCStockTakipEntities db = new DbMVCStockTakipEntities();
         public ActionResult Index()
         {
-            var categories = db.Categories.ToList();
+            var categories = db.Categories.Where(c => c.IsActive == true).ToList();
             return View(categories);
         }
 
@@ -26,6 +26,7 @@ namespace StockTrackingMVC.Controllers
         [HttpPost]
         public ActionResult AddCategory(Categories category)
         {
+            category.IsActive = true;
             db.Categories.Add(category);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -34,7 +35,7 @@ namespace StockTrackingMVC.Controllers
         public ActionResult DeleteCategory(int id)
         {
             var category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            category.IsActive = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

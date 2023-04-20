@@ -1,0 +1,63 @@
+﻿@model StockTrackingMVC.Models.Entity.Users
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal1">
+
+    Yeni Kullanıcı Tanımla
+
+</button>
+
+<div class="modal" id="Modal1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="modal-title">Kullanıcı Ekleme Paneli</h2>
+
+            </div>
+
+            <form method="post" action="/User/NewUser">
+
+                <div class="modal-body">
+
+                    <label>
+
+                        Kullanıcı Adı
+
+                    </label>
+
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+
+                    <br />
+
+                    <label>
+
+                        Şifre
+
+                    </label>
+
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+
+
+
+                    <br />
+
+                    <button type="submit" class="btn btn-info">Kaydet</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Vazgeç</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

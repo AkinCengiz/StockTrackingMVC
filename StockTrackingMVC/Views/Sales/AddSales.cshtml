@@ -1,0 +1,29 @@
+﻿@model StockTrackingMVC.Models.Entity.Sales
+@{
+    ViewBag.Title = "AddSales";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2 class="text-info">Ürün Ekleme Paneli</h2>
+<br />
+<form method="post">
+    <div class="">
+        @Html.LabelFor(s => s.Product)
+        @Html.DropDownListFor(s => s.Products.ProductID, (List<SelectListItem>)ViewBag.ProductList, "Seçiniz...", new { @class = "form-control" })
+    </div><br />
+    <div>
+        @Html.LabelFor(s => s.Employee)
+        @Html.DropDownListFor(s => s.Employees.EmployeeID, (List<SelectListItem>)ViewBag.EmployeeList, "Seçiniz...", new { @class = "form-control" })
+    </div><br />
+    <div>
+        @Html.LabelFor(s => s.Customer)
+        @Html.DropDownListFor(p => p.Customers.CustomerID, (List<SelectListItem>)ViewBag.CustomerList, "Seçiniz...", new { @class = "form-control" })
+    </div><br />
+    <div>
+        @Html.LabelFor(s => s.Amount)
+        @Html.TextBoxFor(s => s.Amount, new { @class = "form-control", @type = "number", @min = "0" })
+    </div><br />
+    <button class="btn btn-primary">Ekle</button>
+</form>
+

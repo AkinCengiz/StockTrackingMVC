@@ -7,6 +7,14 @@
 
 <h2 class="text-info">Ürünler Paneli</h2>
 <br />
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <div class="">
+        Ürün Adına Göre Ara : @Html.TextBox("word")
+        <input type="submit" value="Ara"/>
+    </div><br/>
+}
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -39,3 +47,4 @@
     }
     </tbody>
 </table>
+<a href="/Product/AddProduct" class="btn btn-primary">Ürün Ekle</a>

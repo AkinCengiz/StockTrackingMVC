@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DbMVCStockTakipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DbMVCStockTakipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -21,6 +22,7 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="Balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -30,6 +32,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Department" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -42,6 +45,7 @@
           <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SalesPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Category" Type="int" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
@@ -54,6 +58,14 @@
           <Property Name="Amount" Type="int" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DateInfo" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Products_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
@@ -109,6 +121,7 @@
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
@@ -126,8 +139,7 @@
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DbMVCStockTakipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -138,6 +150,7 @@
           <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -149,6 +162,7 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Customers" FromRole="Customers" ToRole="Sales" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -159,6 +173,7 @@
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Employees" FromRole="Employees" ToRole="Sales" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -173,6 +188,7 @@
           <Property Name="Category" Type="Int32" />
           <NavigationProperty Name="Categories" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Products" FromRole="Products" ToRole="Sales" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
@@ -259,7 +275,16 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="DbMVCStockTakipModel.Users" />
         </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -269,6 +294,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="DbMVCStockTakipModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </MappingFragment>
@@ -277,6 +303,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="DbMVCStockTakipModel.Customers">
               <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -288,6 +315,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="DbMVCStockTakipModel.Employees">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -298,6 +326,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="DbMVCStockTakipModel.Products">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Brand" ColumnName="Brand" />
@@ -318,6 +347,15 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="DateInfo" ColumnName="DateInfo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DbMVCStockTakipModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
